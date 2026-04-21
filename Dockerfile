@@ -10,16 +10,21 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Copia o requirements.txt da pasta backend
+# Copia requirements.txt
 COPY backend/requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia o restante do código
-COPY backend/ .
+# Copia todo o conteúdo de backend para /app/backend (preserva estrutura)
+COPY backend/ ./backend/
+
+# Ajusta o PYTHONPATH para incluir /app/backend
+ENV PYTHONPATH=/app/backend
 
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
 EXPOSE 8080
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Inicia a partir do módulo correto
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8080}"]

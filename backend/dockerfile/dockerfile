@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar e instalar dependências
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar todo o código da aplicação
+COPY app/ ./app/
+COPY alembic.ini .
+COPY alembic/ ./alembic/
+
+# Criar usuário não-root
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
+
+# O comando para rodar a aplicação (ajuste o caminho do app)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]

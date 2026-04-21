@@ -32,36 +32,34 @@ outra tela para resumo de todos os cadastros
 
 2. Fluxo de contas - conta de banco ou saldo de carteira 
 obs pensar em um melhor nome
-obs 2 não ta aparecendo a moeda NZD
-obs 3 quando criar uma conta ela aparece somente em receitas na tela
+
+obs 3 quando criar uma conta ela aparece somente em receitimage.pngas na tela
 obs 4 bloquear a criação de conta com nome vazio 
 obs 5 na pagina de resumo ta tudo em receitas quando ajustar o outro erro talvez ajuste isso 
+
 checklist
  criar conta ok
- editar conta - ERRO
- excluir conta - ERRO 
- saldo aparece corretamente - ok?
+ editar conta - ok
+ excluir conta - ok 
+ saldo aparece corretamente - ok
  saldo inicial entra no cálculo - ERRO
 
 3. Fluxo de categorias
 checklist
-obs na tela de categorias o tipo de despesa está em ingles ajustar para pt-br
-obs2 as opções o tipo (investimento) - precisa de grupos ex: investimento grupo (fixo, variável)	
+	
  criar categoria OK
  editar categoria OK
  excluir categoria OK
- grupos aparecem corretamente - ERRO GRUPOS ESTÃO EM INGLÊS 
+ grupos aparecem corretamente - ok
 
 4. Fluxo de transações
 checklist
-Obs A TELA DE DESCRIÇÃO TA SOBREPONDO O NOME DESCRIÇÃO DESSA FORMA NÃO CONSEGUE VER CORRETAMENTE
-obs 2 o calendario tem que ser em pt-br para cadastro quando eu vou selecionar as datas durante o processo
 
- criar transação - erro
- editar transação - eu não consigo editar 
- excluir transação - eu não consigo ecluir
+ criar transação - ok
+ editar transação - ok
+ excluir transação - ok
  filtros funcionam - OK
- paginação funciona - NÃO SEI TENHO QUE VER 
+ paginação funciona - ok
  conta e categoria corretas aparecem no formulário - OK
 
 
@@ -87,13 +85,9 @@ checklist
 
 7. Câmbio
 checklist
-obs cotação BRL -> USD não converteu
-obs 2 os números de conversão tão estranhos pensar em uma forma de apresentação
-obs 3 as converções não estão dando certo
-obs 4 eu quero converter e que ele busque uma sincronização de cotação automaticamente sem primeiro eu sincronizar para depois converter
 
- criar cotação manual - erro
- converter moeda - erro
+ criar cotação manual - removido
+ converter moeda - ok
  sincronizar cotação externa - ok
  moeda base influencia o sistema - preciso entender não sei o que é
 
@@ -128,5 +122,5 @@ checklist
 checklist
 
  abrir perfil - ok
- alterar moeda base - error
- refletir valor novo na tela - error
+ alterar moeda base - ok
+ refletir valor novo na tela - ok

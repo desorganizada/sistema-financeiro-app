@@ -10,18 +10,15 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiar e instalar dependências
-COPY requirements.txt .
+# Como seu código está em /backend, ajustamos os caminhos:
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar todo o código da aplicação
-COPY app/ ./app/
-COPY alembic.ini .
-COPY alembic/ ./alembic/
+COPY backend/ .
 
-# Criar usuário não-root
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
-# O comando para rodar a aplicação (ajuste o caminho do app)
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+EXPOSE 8080
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

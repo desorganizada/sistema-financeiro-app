@@ -1,0 +1,56 @@
+Bloco 1 — Fundação
+estrutura do projeto
+FastAPI rodando
+PostgreSQL conectado
+modelagem inicial
+init_db
+autenticação base
+login/register
+JWT + rota protegida
+Bloco 2 — CRUD principal
+contas
+categorias
+transações
+Bloco 3 — Dashboard e orçamento
+resumo mensal
+por categoria
+evolução mensal
+orçamento mensal
+planejado x realizado
+ percentuais
+Bloco 4 — Melhorias do backend
+ filtros de transações por período/categoria/conta
+ paginação e ordenação
+ validações melhores
+ Alembic para migrações
+ relacionamentos SQLAlchemy
+ seeds/categorias padrão
+ tratamento global de erros
+ config por ambiente
+Bloco 5 — Recursos financeiros do MVP
+ conversão de moeda
+ histórico de cotação
+ importação CSV
+ importação OFX
+ deduplicação de lançamentos
+37 saldo por conta
+ fechamento mensal
+Bloco 6 — Preparação para integração bancária
+ módulo banking base
+ provider abstraction
+ conexões bancárias
+ sync jobs
+ webhooks
+ sincronização de contas
+ sincronização de transações
+Bloco 7 — Flutter MVP
+estrutura Flutter
+auth no app
+tela dashboard
+tela contas
+tela categorias
+tela transações
+tela orçamento
+integração com API
+gráficos
+polish final e testes

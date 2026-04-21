@@ -1,0 +1,132 @@
+Ideias para o projeto 
+criar um arquivo unico de moedas onde nele você edita e faz so a chamada dessa parte do codigo dentro da parte onde precisa no projeot 
+
+
+O que revisar agora
+1. Fluxo de autenticação
+
+Verifique se está funcionando:
+
+login
+persistência do token
+/auth/me
+logout
+voltar ao app já autenticado
+checklist
+ login funciona
+ token salva
+ token é validado ao abrir o app
+ logout limpa sessão
+ 
+ 
+
+
+usuario : carol@email.com
+senha: 281494
+
+Observações gerais
+Primeira tela ser dividia em dois botões
+uma tela para cadastro das informações
+outra tela para resumo de todos os cadastros
+
+
+2. Fluxo de contas - conta de banco ou saldo de carteira 
+obs pensar em um melhor nome
+obs 2 não ta aparecendo a moeda NZD
+obs 3 quando criar uma conta ela aparece somente em receitas na tela
+obs 4 bloquear a criação de conta com nome vazio 
+obs 5 na pagina de resumo ta tudo em receitas quando ajustar o outro erro talvez ajuste isso 
+checklist
+ criar conta ok
+ editar conta - ERRO
+ excluir conta - ERRO 
+ saldo aparece corretamente - ok?
+ saldo inicial entra no cálculo - ERRO
+
+3. Fluxo de categorias
+checklist
+obs na tela de categorias o tipo de despesa está em ingles ajustar para pt-br
+obs2 as opções o tipo (investimento) - precisa de grupos ex: investimento grupo (fixo, variável)	
+ criar categoria OK
+ editar categoria OK
+ excluir categoria OK
+ grupos aparecem corretamente - ERRO GRUPOS ESTÃO EM INGLÊS 
+
+4. Fluxo de transações
+checklist
+Obs A TELA DE DESCRIÇÃO TA SOBREPONDO O NOME DESCRIÇÃO DESSA FORMA NÃO CONSEGUE VER CORRETAMENTE
+obs 2 o calendario tem que ser em pt-br para cadastro quando eu vou selecionar as datas durante o processo
+
+ criar transação - erro
+ editar transação - eu não consigo editar 
+ excluir transação - eu não consigo ecluir
+ filtros funcionam - OK
+ paginação funciona - NÃO SEI TENHO QUE VER 
+ conta e categoria corretas aparecem no formulário - OK
+
+
+5. Dashboard
+checklist
+EU PRECISO SER CAPAZ DE CADASTRAR TRANSAÇÕES
+TROCAR O GRAFICO DE CATEGORIA
+
+ resumo mensal correto
+ resumo por categoria correto
+ evolução mensal correta
+ dashboard analítico abre
+ gráficos carregam sem erro
+
+6. Orçamentos
+NÃO FAZ SENTIDO VOU REMOVER
+checklist
+ criar orçamento
+ editar orçamento
+ excluir orçamento
+ planejado vs realizado funciona
+
+
+7. Câmbio
+checklist
+obs cotação BRL -> USD não converteu
+obs 2 os números de conversão tão estranhos pensar em uma forma de apresentação
+obs 3 as converções não estão dando certo
+obs 4 eu quero converter e que ele busque uma sincronização de cotação automaticamente sem primeiro eu sincronizar para depois converter
+
+ criar cotação manual - erro
+ converter moeda - erro
+ sincronizar cotação externa - ok
+ moeda base influencia o sistema - preciso entender não sei o que é
+
+8. Importação
+retirar 
+não faz sentido
+checklist
+ importar CSV
+ importar OFX
+ duplicadas são ignoradas
+ erros aparecem
+ totais criados/skipped aparecem
+
+9. Fechamento mensal
+precisa de transações
+
+checklist
+ fechar mês
+ reabrir mês
+ transações em mês fechado bloqueiam
+ status do fechamento aparece no app
+
+10. Regras automáticas
+acho que pode tirar visto que não vai ter importação 
+
+checklist
+ criar regra
+ listar regra
+ regra é usada na importação
+
+11. Perfil
+checklist
+
+ abrir perfil - ok
+ alterar moeda base - error
+ refletir valor novo na tela - error

@@ -127,13 +127,22 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Sistema Financeiro'),
         elevation: 0,
         actions: [
+          // Ícone de Admin (só aparece se for admin)
+          if (_user!.isAdmin)
+            IconButton(
+              onPressed: () => context.push('/admin/users'),
+              icon: const Icon(Icons.admin_panel_settings),
+              tooltip: 'Administração',
+            ),
           IconButton(
             onPressed: _refreshSummary,
             icon: const Icon(Icons.refresh),
+            tooltip: 'Atualizar',
           ),
           IconButton(
             onPressed: () => _logout(context),
             icon: const Icon(Icons.logout),
+            tooltip: 'Sair',
           ),
         ],
       ),
@@ -162,222 +171,164 @@ class _HomePageState extends State<HomePage> {
 
           return RefreshIndicator(
             onRefresh: _refreshSummary,
-            child: ListView(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-              children: [
-                _WelcomeHeader(
-                  userName: _user!.name,
-                  baseCurrency: _user!.baseCurrency,
-                ),
-                const SizedBox(height: 20),
-
-                _BalanceHighlightCard(
-                  balance: _formatCurrency(summary.balance),
-                  transactionsCount: summary.transactionsCount,
-                  currency: _user!.baseCurrency,
-                ),
-                const SizedBox(height: 20),
-
-                const _SectionHeader(
-                  title: 'Resumo do mês',
-                  subtitle: 'Acompanhe rapidamente seus principais números',
-                ),
-                const SizedBox(height: 12),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: _MiniSummaryCard(
-                        title: 'Receitas',
-                        value: _formatCurrency(summary.income),
-                        icon: Icons.arrow_downward_rounded,
-                        iconColor: Colors.green,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _MiniSummaryCard(
-                        title: 'Despesas',
-                        value: _formatCurrency(summary.expense),
-                        icon: Icons.arrow_upward_rounded,
-                        iconColor: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: _MiniSummaryCard(
-                        title: 'Investimentos',
-                        value: _formatCurrency(summary.investment),
-                        icon: Icons.trending_up,
-                        iconColor: Colors.blue,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _MiniSummaryCard(
-                        title: 'Transações',
-                        value: summary.transactionsCount.toString(),
-                        icon: Icons.receipt_long_outlined,
-                        iconColor: Colors.orange,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                const _SectionHeader(
-                  title: 'Ações rápidas',
-                  subtitle: 'Os acessos mais usados no seu dia a dia',
-                ),
-                const SizedBox(height: 12),
-
-                SizedBox(
-                  height: 108,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      _QuickActionButton(
-                        icon: Icons.swap_horiz,
-                        label: 'Transações',
-                        onTap: () => context.push('/transactions'),
-                      ),
-                      _QuickActionButton(
-                        icon: Icons.account_balance,
-                        label: 'Contas',
-                        onTap: () => context.push('/accounts'),
-                      ),
-                      _QuickActionButton(
-                        icon: Icons.category_outlined,
-                        label: 'Categorias',
-                        onTap: () => context.push('/categories'),
-                      ),
-                      _QuickActionButton(
-                        icon: Icons.bar_chart,
-                        label: 'Dashboard',
-                        onTap: () => context.push('/dashboard-analytics'),
-                      ),
-                      _QuickActionButton(
-                        icon: Icons.currency_exchange,
-                        label: 'Câmbio',
-                        onTap: () => context.push('/exchange'),
-                      ),
-                      if (_user!.isAdmin)
-                        _QuickActionButton(
-                          icon: Icons.admin_panel_settings,
-                          label: 'Admin',
-                          onTap: () => context.push('/admin/users'),
-                        ),
-                    ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _WelcomeHeader(
+                    userName: _user!.name,
+                    baseCurrency: _user!.baseCurrency,
                   ),
-                ),
-                const SizedBox(height: 24),
+                  const SizedBox(height: 20),
 
-                const _SectionHeader(
-                  title: 'Análises',
-                  subtitle: 'Visualize relatórios e indicadores',
-                ),
-                const SizedBox(height: 12),
+                  _BalanceHighlightCard(
+                    balance: _formatCurrency(summary.balance),
+                    transactionsCount: summary.transactionsCount,
+                    currency: _user!.baseCurrency,
+                  ),
+                  const SizedBox(height: 20),
 
-                _ModuleCard(
-                  title: 'Resumo por categoria',
-                  subtitle: 'Veja para onde seu dinheiro está indo',
-                  icon: Icons.pie_chart_outline,
-                  onTap: () => context.push('/dashboard-by-category'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Evolução mensal',
-                  subtitle: 'Acompanhe o comportamento ao longo do ano',
-                  icon: Icons.show_chart,
-                  onTap: () => context.push('/monthly-evolution'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Dashboard analítico',
-                  subtitle: 'Tenha uma visão mais completa das finanças',
-                  icon: Icons.bar_chart,
-                  onTap: () => context.push('/dashboard-analytics'),
-                ),
-                const SizedBox(height: 24),
-
-                const _SectionHeader(
-                  title: 'Gestão financeira',
-                  subtitle: 'Módulos principais do sistema',
-                ),
-                const SizedBox(height: 12),
-
-                _ModuleCard(
-                  title: 'Contas',
-                  subtitle: 'Gerencie suas contas cadastradas',
-                  icon: Icons.account_balance,
-                  onTap: () => context.push('/accounts'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Categorias',
-                  subtitle: 'Organize receitas, despesas e investimentos',
-                  icon: Icons.category_outlined,
-                  onTap: () => context.push('/categories'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Transações',
-                  subtitle: 'Cadastre e acompanhe movimentações',
-                  icon: Icons.swap_horiz,
-                  onTap: () => context.push('/transactions'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Orçamentos',
-                  subtitle: 'Planeje seus limites de gastos',
-                  icon: Icons.savings_outlined,
-                  onTap: () => context.push('/budgets'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Planejado vs realizado',
-                  subtitle: 'Compare o que foi previsto com o que aconteceu',
-                  icon: Icons.analytics_outlined,
-                  onTap: () => context.push('/budget-vs-actual'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Câmbio',
-                  subtitle: 'Converta valores e acompanhe moedas',
-                  icon: Icons.currency_exchange,
-                  onTap: () => context.push('/exchange'),
-                ),
-                const SizedBox(height: 12),
-                _ModuleCard(
-                  title: 'Fechamento mensal',
-                  subtitle: 'Controle o encerramento de cada mês',
-                  icon: Icons.lock_clock_outlined,
-                  onTap: () => context.push('/monthly-closures'),
-                ),
-                const SizedBox(height: 12),
-
-                if (_user!.isAdmin) ...[
-                  _ModuleCard(
-                    title: 'Administração de usuários',
-                    subtitle: 'Gerencie usuários e permissões do sistema',
-                    icon: Icons.admin_panel_settings,
-                    onTap: () => context.push('/admin/users'),
+                  const _SectionHeader(
+                    title: 'Resumo do mês',
+                    subtitle: 'Acompanhe rapidamente seus principais números',
                   ),
                   const SizedBox(height: 12),
-                ],
 
-                _ModuleCard(
-                  title: 'Perfil',
-                  subtitle: 'Ajuste seus dados e preferências',
-                  icon: Icons.person_outline,
-                  onTap: _openProfile,
-                ),
-              ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _MiniSummaryCard(
+                          title: 'Receitas',
+                          value: _formatCurrency(summary.income),
+                          icon: Icons.arrow_downward_rounded,
+                          iconColor: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _MiniSummaryCard(
+                          title: 'Despesas',
+                          value: _formatCurrency(summary.expense),
+                          icon: Icons.arrow_upward_rounded,
+                          iconColor: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _MiniSummaryCard(
+                          title: 'Investimentos',
+                          value: _formatCurrency(summary.investment),
+                          icon: Icons.trending_up,
+                          iconColor: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _MiniSummaryCard(
+                          title: 'Transações',
+                          value: summary.transactionsCount.toString(),
+                          icon: Icons.receipt_long_outlined,
+                          iconColor: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  const _SectionHeader(
+                    title: 'Ações rápidas',
+                    subtitle: 'Os acessos mais usados no seu dia a dia',
+                  ),
+                  const SizedBox(height: 12),
+
+                  SizedBox(
+                    height: 108,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        _QuickActionButton(
+                          icon: Icons.swap_horiz,
+                          label: 'Transações',
+                          onTap: () => context.push('/transactions'),
+                        ),
+                        _QuickActionButton(
+                          icon: Icons.account_balance,
+                          label: 'Contas',
+                          onTap: () => context.push('/accounts'),
+                        ),
+                        _QuickActionButton(
+                          icon: Icons.category_outlined,
+                          label: 'Categorias',
+                          onTap: () => context.push('/categories'),
+                        ),
+                        _QuickActionButton(
+                          icon: Icons.bar_chart,
+                          label: 'Dashboard',
+                          onTap: () => context.push('/dashboard-analytics'),
+                        ),
+                        _QuickActionButton(
+                          icon: Icons.currency_exchange,
+                          label: 'Câmbio',
+                          onTap: () => context.push('/exchange'),
+                        ),
+                        if (_user!.isAdmin)
+                          _QuickActionButton(
+                            icon: Icons.admin_panel_settings,
+                            label: 'Admin',
+                            onTap: () => context.push('/admin/users'),
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  const _SectionHeader(
+                    title: 'Análises',
+                    subtitle: 'Visualize relatórios e indicadores',
+                  ),
+                  const SizedBox(height: 12),
+
+                  _ModuleCard(
+                    title: 'Resumo por categoria',
+                    subtitle: 'Veja para onde seu dinheiro está indo',
+                    icon: Icons.pie_chart_outline,
+                    onTap: () => context.push('/dashboard-by-category'),
+                  ),
+                  const SizedBox(height: 12),
+                  _ModuleCard(
+                    title: 'Evolução mensal',
+                    subtitle: 'Acompanhe o comportamento ao longo do ano',
+                    icon: Icons.show_chart,
+                    onTap: () => context.push('/monthly-evolution'),
+                  ),
+                  const SizedBox(height: 12),
+                  _ModuleCard(
+                    title: 'Dashboard analítico',
+                    subtitle: 'Tenha uma visão mais completa das finanças',
+                    icon: Icons.bar_chart,
+                    onTap: () => context.push('/dashboard-analytics'),
+                  ),
+                  const SizedBox(height: 24),
+
+                  const _SectionHeader(
+                    title: 'Gestão financeira',
+                    subtitle: 'Módulos principais do sistema',
+                  ),
+                  const SizedBox(height: 16),
+
+                  // GRID RESPONSIVO DE MÓDULOS (substitui a lista vertical)
+                  _MainModulesGrid(
+                    user: _user!,
+                    onProfileTap: _openProfile,
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -385,6 +336,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+// ---------------------- WIDGETS EXISTENTES (mantidos) ----------------------
 
 class _WelcomeHeader extends StatelessWidget {
   final String userName;
@@ -721,6 +674,124 @@ class _ModuleCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------- NOVO WIDGET: GRID DE MÓDULOS PRINCIPAIS (corrigido overflow) ----------------------
+
+class _MainModulesGrid extends StatelessWidget {
+  final UserModel user;
+  final VoidCallback onProfileTap;
+
+  const _MainModulesGrid({
+    required this.user,
+    required this.onProfileTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Lista de módulos (sem repetir o perfil separadamente)
+    final List<Map<String, dynamic>> modules = [
+      {'title': 'Contas', 'subtitle': 'Gerencie suas contas cadastradas', 'icon': Icons.account_balance, 'route': '/accounts'},
+      {'title': 'Categorias', 'subtitle': 'Organize receitas, despesas e investimentos', 'icon': Icons.category_outlined, 'route': '/categories'},
+      {'title': 'Transações', 'subtitle': 'Cadastre e acompanhe movimentações', 'icon': Icons.swap_horiz, 'route': '/transactions'},
+      {'title': 'Orçamentos', 'subtitle': 'Planeje seus limites de gastos', 'icon': Icons.savings_outlined, 'route': '/budgets'},
+      {'title': 'Planejado vs realizado', 'subtitle': 'Compare o que foi previsto com o que aconteceu', 'icon': Icons.analytics_outlined, 'route': '/budget-vs-actual'},
+      {'title': 'Câmbio', 'subtitle': 'Converta valores e acompanhe moedas', 'icon': Icons.currency_exchange, 'route': '/exchange'},
+      {'title': 'Fechamento mensal', 'subtitle': 'Controle o encerramento de cada mês', 'icon': Icons.lock_clock_outlined, 'route': '/monthly-closures'},
+      if (user.isAdmin) {'title': 'Administração de usuários', 'subtitle': 'Gerencie usuários e permissões do sistema', 'icon': Icons.admin_panel_settings, 'route': '/admin/users'},
+      {'title': 'Perfil', 'subtitle': 'Ajuste seus dados e preferências', 'icon': Icons.person_outline, 'route': '/profile', 'isProfile': true},
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Define quantas colunas: 2 em telas pequenas, 3 em telas médias/grandes
+        int crossAxisCount = constraints.maxWidth < 600 ? 2 : 3;
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: 1.35, // aumentado para dar mais altura (antes 1.2)
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: modules.length,
+          itemBuilder: (_, index) {
+            final module = modules[index];
+            return _ModuleGridCard(
+              title: module['title'] as String,
+              subtitle: module['subtitle'] as String,
+              icon: module['icon'] as IconData,
+              onTap: module['isProfile'] == true
+                  ? onProfileTap
+                  : () => context.push(module['route'] as String),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ModuleGridCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _ModuleGridCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12), // reduzido de 16 para 12
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xFFE5E7EB)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // importante: não forçar altura máxima
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 20, // reduzido de 24 para 20
+              backgroundColor: const Color(0xFFE8F3E9),
+              child: Icon(icon, color: const Color(0xFF4BAE4F), size: 20),
+            ),
+            const SizedBox(height: 8), // reduzido de 12 para 8
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14, // reduzido de 16 para 14
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF1F2937),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4), // reduzido de 6 para 4
+            Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 11, // reduzido de 12 para 11
+                color: Color(0xFF6B7280),
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );

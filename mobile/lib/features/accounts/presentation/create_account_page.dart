@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // necessário para o FilteringTextInputFormatter
 import 'package:go_router/go_router.dart';
 
 import '../data/account_service.dart';
@@ -28,11 +29,15 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     });
 
     try {
+      // Substitui vírgula por ponto para fazer o parse corretamente
+      final balanceText = _initialBalanceController.text.replaceAll(',', '.');
+      final initialBalance = double.tryParse(balanceText) ?? 0;
+
       await _accountService.createAccount(
         name: _nameController.text.trim(),
         type: _selectedType,
         currency: _selectedCurrency,
-        initialBalance: double.tryParse(_initialBalanceController.text) ?? 0,
+        initialBalance: initialBalance,
         initialBalanceDate: null,
       );
 
@@ -122,7 +127,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             const SizedBox(height: 16),
             TextField(
               controller: _initialBalanceController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),  // permite decimal
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d+([.,]\d{0,2})?$'),  // aceita dígitos, ponto ou vírgula e até 2 casas decimais
+                ),
+              ],
               decoration: const InputDecoration(
                 labelText: 'Saldo inicial',
                 border: OutlineInputBorder(),

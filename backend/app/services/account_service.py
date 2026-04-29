@@ -9,6 +9,9 @@ from app.schemas.account import AccountCreate, AccountUpdate
 
 
 def create_account(db: Session, user_id: int, account_data: AccountCreate):
+    # Mapeia o tipo da transação de acordo com o tipo da conta
+    transaction_type = "investment" if account_data.type == "investimento" else "income"
+
     account = Account(
         name=account_data.name,
         type=account_data.type,
@@ -48,7 +51,7 @@ def create_account(db: Session, user_id: int, account_data: AccountCreate):
             user_id=user_id,
             account_id=account.id,
             category_id=category.id,
-            type="income",
+            type=transaction_type,
             description="Saldo inicial",
             amount_converted=initial_balance,
             amount_original=initial_balance,
@@ -76,70 +79,70 @@ def get_account_by_id(db: Session, user_id: int, account_id: int):
 
 
 def update_account(db: Session, account: Account, account_data: AccountUpdate):
-    old_currency = account.currency
-
+    # Atualiza campos básicos (sempre)
     account.name = account_data.name
     account.type = account_data.type
     account.currency = account_data.currency
 
-    initial_balance = Decimal(str(account_data.initial_balance or 0))
-    transaction_date = account_data.initial_balance_date or date.today()
+    # ============================================================
+    # Só processa o saldo inicial SE o campo foi enviado (não None)
+    # ============================================================
+    if account_data.initial_balance is not None:
+        initial_balance = Decimal(str(account_data.initial_balance))
+        transaction_date = account_data.initial_balance_date or date.today()
+        transaction_type = "investment" if account.type == "investimento" else "income"
 
-    category = (
-        db.query(Category)
-        .filter(
+        # Categoria "Saldo inicial"
+        category = db.query(Category).filter(
             Category.user_id == account.user_id,
             Category.name == "Saldo inicial"
-        )
-        .first()
-    )
+        ).first()
+        if not category:
+            category = Category(
+                name="Saldo inicial",
+                type="income",
+                user_id=account.user_id
+            )
+            db.add(category)
+            db.commit()
+            db.refresh(category)
 
-    if not category:
-        category = Category(
-            name="Saldo inicial",
-            type="income",
-            user_id=account.user_id
-        )
-        db.add(category)
-        db.commit()
-        db.refresh(category)
-
-    initial_transaction = (
-        db.query(Transaction)
-        .filter(
+        # Busca transação existente de saldo inicial
+        initial_transaction = db.query(Transaction).filter(
             Transaction.user_id == account.user_id,
             Transaction.account_id == account.id,
             Transaction.description == "Saldo inicial"
-        )
-        .first()
-    )
+        ).first()
 
-    if initial_balance > 0:
-        if initial_transaction:
-            initial_transaction.category_id = category.id
-            initial_transaction.type = "income"
-            initial_transaction.amount_converted = initial_balance
-            initial_transaction.amount_original = initial_balance
-            initial_transaction.original_currency = account.currency
-            initial_transaction.exchange_rate = 1
-            initial_transaction.date = transaction_date
+        if initial_balance > 0:
+            if initial_transaction:
+                # Atualiza a existente
+                initial_transaction.category_id = category.id
+                initial_transaction.type = transaction_type
+                initial_transaction.amount_converted = initial_balance
+                initial_transaction.amount_original = initial_balance
+                initial_transaction.original_currency = account.currency
+                initial_transaction.exchange_rate = 1
+                initial_transaction.date = transaction_date
+            else:
+                # Cria nova
+                new_transaction = Transaction(
+                    user_id=account.user_id,
+                    account_id=account.id,
+                    category_id=category.id,
+                    type=transaction_type,
+                    description="Saldo inicial",
+                    amount_converted=initial_balance,
+                    amount_original=initial_balance,
+                    original_currency=account.currency,
+                    exchange_rate=1,
+                    date=transaction_date,
+                )
+                db.add(new_transaction)
         else:
-            initial_transaction = Transaction(
-                user_id=account.user_id,
-                account_id=account.id,
-                category_id=category.id,
-                type="income",
-                description="Saldo inicial",
-                amount_converted=initial_balance,
-                amount_original=initial_balance,
-                original_currency=account.currency,
-                exchange_rate=1,
-                date=transaction_date,
-            )
-            db.add(initial_transaction)
-    else:
-        if initial_transaction:
-            db.delete(initial_transaction)
+            # Se initial_balance == 0, remove a transação (se existir)
+            if initial_transaction:
+                db.delete(initial_transaction)
 
     db.commit()
     db.refresh(account)
@@ -180,7 +183,8 @@ def get_account_balances(db: Session, user_id: int):
             elif transaction.type == "investment":
                 investment += amount
 
-        balance = income - expense - investment
+        # CORREÇÃO: investment soma, não subtrai
+        balance = income - expense + investment
 
         result.append(
             {

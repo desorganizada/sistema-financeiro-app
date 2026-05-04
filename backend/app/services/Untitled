@@ -1,0 +1,118 @@
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{id: 29, name: , type: investimento, currency: BRL, user_id: 8}]
+BASE URL: http://localhost:8000
+PATH: /accounts/balances
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{account_id: 29, account_name: , currency: BRL, income: 0.0, expense: 0.0, investment: 0.0, balance: 0.0}]
+BASE URL: http://localhost:8000
+PATH: /accounts
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{id: 29, name: , type: investimento, currency: BRL, user_id: 8}]
+BASE URL: http://localhost:8000
+PATH: /accounts/balances
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{account_id: 29, account_name: , currency: BRL, income: 0.0, expense: 0.0, investment: 0.0, balance: 0.0}]
+BASE URL: http://localhost:8000
+PATH: /accounts
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{id: 29, name: , type: investimento, currency: BRL, user_id: 8}]
+BASE URL: http://localhost:8000
+PATH: /accounts/balances
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{account_id: 29, account_name: , currency: BRL, income: 0.0, expense: 0.0, investment: 0.0, balance: 0.0}]
+BASE URL: http://localhost:8000
+PATH: /accounts
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{id: 29, name: , type: investimento, currency: BRL, user_id: 8}]
+BASE URL: http://localhost:8000
+PATH: /accounts/balances
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{account_id: 29, account_name: , currency: BRL, income: 0.0, expense: 0.0, investment: 0.0, balance: 0.0}]
+BASE URL: http://localhost:8000
+PATH: /accounts/29
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: {id: 29, name: , type: investimento, currency: BRL, user_id: 8}
+BASE URL: http://localhost:8000
+PATH: /accounts
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{id: 29, name: , type: investimento, currency: BRL, user_id: 8}]
+BASE URL: http://localhost:8000
+PATH: /accounts/balances
+QUERY: {}
+TOKEN:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw
+HEADERS: {Content-Type: application/json, Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZW1haWwiOiJzYW1hcmFAZW1haWwuY29tIiwiZXhwIjoxNzc3NDczOTA0fQ.nMfdvSIRp62DjuS2NNBP0U_mX6XJL51w
+7W4nWXzWLpw}
+RESPONSE STATUS: 200
+RESPONSE DATA: [{account_id: 29, account_name: , currency: BRL, income: 0.0, expense: 0.0, investment: 0.0, balance: 0.0}]

@@ -1,0 +1,126 @@
+Ideias para o projeto 
+criar um arquivo unico de moedas onde nele você edita e faz so a chamada dessa parte do codigo dentro da parte onde precisa no projeot 
+
+
+O que revisar agora
+1. Fluxo de autenticação
+
+Verifique se está funcionando:
+
+login
+persistência do token
+/auth/me
+logout
+voltar ao app já autenticado
+checklist
+ login funciona
+ token salva
+ token é validado ao abrir o app
+ logout limpa sessão
+ 
+ 
+
+
+usuario : carol@email.com
+senha: 281494
+
+Observações gerais
+Primeira tela ser dividia em dois botões
+uma tela para cadastro das informações
+outra tela para resumo de todos os cadastros
+
+
+2. Fluxo de contas - conta de banco ou saldo de carteira 
+obs pensar em um melhor nome
+
+obs 3 quando criar uma conta ela aparece somente em receitimage.pngas na tela
+obs 4 bloquear a criação de conta com nome vazio 
+obs 5 na pagina de resumo ta tudo em receitas quando ajustar o outro erro talvez ajuste isso 
+
+checklist
+ criar conta ok
+ editar conta - ok
+ excluir conta - ok 
+ saldo aparece corretamente - ok
+ saldo inicial entra no cálculo - ERRO
+
+3. Fluxo de categorias
+checklist
+	
+ criar categoria OK
+ editar categoria OK
+ excluir categoria OK
+ grupos aparecem corretamente - ok
+
+4. Fluxo de transações
+checklist
+
+ criar transação - ok
+ editar transação - ok
+ excluir transação - ok
+ filtros funcionam - OK
+ paginação funciona - ok
+ conta e categoria corretas aparecem no formulário - OK
+
+
+5. Dashboard
+checklist
+EU PRECISO SER CAPAZ DE CADASTRAR TRANSAÇÕES
+TROCAR O GRAFICO DE CATEGORIA
+
+ resumo mensal correto
+ resumo por categoria correto
+ evolução mensal correta
+ dashboard analítico abre
+ gráficos carregam sem erro
+
+6. Orçamentos
+NÃO FAZ SENTIDO VOU REMOVER
+checklist
+ criar orçamento
+ editar orçamento
+ excluir orçamento
+ planejado vs realizado funciona
+
+
+7. Câmbio
+checklist
+
+ criar cotação manual - removido
+ converter moeda - ok
+ sincronizar cotação externa - ok
+ moeda base influencia o sistema - preciso entender não sei o que é
+
+8. Importação
+retirar 
+não faz sentido
+checklist
+ importar CSV
+ importar OFX
+ duplicadas são ignoradas
+ erros aparecem
+ totais criados/skipped aparecem
+
+9. Fechamento mensal
+precisa de transações
+
+checklist
+ fechar mês
+ reabrir mês
+ transações em mês fechado bloqueiam
+ status do fechamento aparece no app
+
+10. Regras automáticas
+acho que pode tirar visto que não vai ter importação 
+
+checklist
+ criar regra
+ listar regra
+ regra é usada na importação
+
+11. Perfil
+checklist
+
+ abrir perfil - ok
+ alterar moeda base - ok
+ refletir valor novo na tela - ok

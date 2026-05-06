@@ -61,9 +61,7 @@ class _AccountsPageState extends State<AccountsPage> {
     await _loadAccounts();
   }
 
-  /// 🔧 Método para confirmar exclusão da conta
   Future<void> _confirmDeleteAccount(AccountModel account) async {
-    // Verifica se a conta tem saldo ou transações
     final hasBalance = (account.balance != null && account.balance!.abs() > 0);
     final hasTransactions = (account.income != null && account.income! > 0) ||
         (account.expense != null && account.expense! > 0) ||
@@ -148,7 +146,6 @@ class _AccountsPageState extends State<AccountsPage> {
     }
   }
 
-  /// 🔧 Método para executar a exclusão
   Future<void> _deleteAccount(AccountModel account) async {
     setState(() {
       _isDeleting = true;
@@ -159,10 +156,8 @@ class _AccountsPageState extends State<AccountsPage> {
       
       if (!mounted) return;
       
-      // Recarrega a lista
       await _loadAccounts();
       
-      // Mostra mensagem de sucesso
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -334,7 +329,6 @@ class _AccountsPageState extends State<AccountsPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    // Conteúdo principal - clica para editar
                                     InkWell(
                                       onTap: () => _goToEditAccount(account),
                                       borderRadius: const BorderRadius.only(
@@ -343,78 +337,173 @@ class _AccountsPageState extends State<AccountsPage> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(16),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: _getTypeColor(account.type).withOpacity(0.12),
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  _getAccountIcon(account.type),
-                                                  style: const TextStyle(fontSize: 24),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 12),
-                                            Expanded(
-                                              child: Column(
+                                        child: LayoutBuilder(
+                                          builder: (context, constraints) {
+                                            // 🔧 RESPONSIVO: Em telas pequenas, empilha verticalmente
+                                            if (constraints.maxWidth < 450) {
+                                              return Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    account.name,
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
+                                                  // Linha superior: ícone + nome + tipo
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        width: 50,
+                                                        height: 50,
+                                                        decoration: BoxDecoration(
+                                                          color: _getTypeColor(account.type).withOpacity(0.12),
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            _getAccountIcon(account.type),
+                                                            style: const TextStyle(fontSize: 24),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 12),
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              account.name,
+                                                              style: const TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight: FontWeight.bold,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(height: 4),
+                                                            Text(
+                                                              _getAccountTypeName(account.type),
+                                                              style: TextStyle(
+                                                                color: AppColors.textMedium,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 12),
+                                                  // Linha inferior: saldo
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Saldo:',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: AppColors.textMedium,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        _formatCurrency(balance, account.currency),
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: isPositive ? AppColors.success : AppColors.error,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   const SizedBox(height: 4),
-                                                  Text(
-                                                    _getAccountTypeName(account.type),
-                                                    style: TextStyle(
-                                                      color: AppColors.textMedium,
-                                                      fontSize: 12,
+                                                  Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey.shade200,
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      child: Text(
+                                                        'Saldo original',
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: AppColors.textMedium,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
-                                              ),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              );
+                                            }
+                                            
+                                            // 🔧 LAYOUT DESKTOP: mantém original lado a lado
+                                            return Row(
                                               children: [
-                                                Text(
-                                                  _formatCurrency(balance, account.currency),
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: isPositive ? AppColors.success : AppColors.error,
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 4),
                                                 Container(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                  width: 50,
+                                                  height: 50,
                                                   decoration: BoxDecoration(
-                                                    color: Colors.grey.shade200,
+                                                    color: _getTypeColor(account.type).withOpacity(0.12),
                                                     borderRadius: BorderRadius.circular(12),
                                                   ),
-                                                  child: Text(
-                                                    'Saldo original',
-                                                    style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: AppColors.textMedium,
+                                                  child: Center(
+                                                    child: Text(
+                                                      _getAccountIcon(account.type),
+                                                      style: const TextStyle(fontSize: 24),
                                                     ),
                                                   ),
                                                 ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        account.name,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 4),
+                                                      Text(
+                                                        _getAccountTypeName(account.type),
+                                                        style: TextStyle(
+                                                          color: AppColors.textMedium,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      _formatCurrency(balance, account.currency),
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: isPositive ? AppColors.success : AppColors.error,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey.shade200,
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      child: Text(
+                                                        'Saldo original',
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: AppColors.textMedium,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ],
-                                            ),
-                                          ],
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
-                                    // Botão de excluir
                                     Divider(height: 0, color: AppColors.borderSand),
                                     InkWell(
                                       onTap: () => _confirmDeleteAccount(account),
@@ -458,7 +547,6 @@ class _AccountsPageState extends State<AccountsPage> {
                             },
                           ),
                         ),
-                        // Overlay de loading durante exclusão
                         if (_isDeleting)
                           Container(
                             color: Colors.black.withOpacity(0.3),

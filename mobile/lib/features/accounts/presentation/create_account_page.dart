@@ -92,7 +92,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Conta criada com sucesso!'),
-          backgroundColor: AppColors.primaryTerracota ,
+          backgroundColor: AppColors.primaryTerracota,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
@@ -138,27 +138,16 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header com ícone
             _buildHeader(),
             const SizedBox(height: 20),
-            
-            // Título
             _buildTitle(),
             const SizedBox(height: 32),
-            
-            // Card do formulário
             _buildFormCard(),
             const SizedBox(height: 20),
-            
-            // Container informativo
             _buildInfoContainer(),
             const SizedBox(height: 24),
-            
-            // Botão criar
             _buildSubmitButton(),
             const SizedBox(height: 16),
-            
-            // Mensagem de erro
             if (_message != null) _buildErrorMessage(),
           ],
         ),
@@ -249,7 +238,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           ),
           const SizedBox(height: 16),
           
-          // Nome da conta
           TextField(
             controller: _nameController,
             decoration: const InputDecoration(
@@ -260,19 +248,33 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           ),
           const SizedBox(height: 16),
           
-          // Tipo e Moeda
-          Row(
-            children: [
-              Expanded(child: _buildTypeDropdown()),
-              const SizedBox(width: 16),
-              Expanded(child: _buildCurrencyDropdown()),
-            ],
+          // 🔧 CORRIGIDO: Layout responsivo para mobile
+          // Em telas pequenas, empilha os campos verticalmente
+          LayoutBuilder(
+            builder: (context, constraints) {
+              // Se a largura for menor que 500px, empilha verticalmente
+              if (constraints.maxWidth < 500) {
+                return Column(
+                  children: [
+                    _buildTypeDropdown(),
+                    const SizedBox(height: 12),
+                    _buildCurrencyDropdown(),
+                  ],
+                );
+              }
+              // Senão, mantém em linha
+              return Row(
+                children: [
+                  Expanded(child: _buildTypeDropdown()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _buildCurrencyDropdown()),
+                ],
+              );
+            },
           ),
           
           const SizedBox(height: 24),
-          
           Divider(color: AppColors.borderSand),
-          
           const SizedBox(height: 24),
           
           Text(
@@ -285,13 +287,26 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           ),
           const SizedBox(height: 16),
           
-          // Data e Valor
-          Row(
-            children: [
-              Expanded(child: _buildDateField()),
-              const SizedBox(width: 16),
-              Expanded(child: _buildAmountField()),
-            ],
+          // 🔧 CORRIGIDO: Layout responsivo para data e valor
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 500) {
+                return Column(
+                  children: [
+                    _buildDateField(),
+                    const SizedBox(height: 12),
+                    _buildAmountField(),
+                  ],
+                );
+              }
+              return Row(
+                children: [
+                  Expanded(child: _buildDateField()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _buildAmountField()),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -324,12 +339,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         labelText: 'Moeda',
         prefixIcon: Icon(Icons.currency_exchange),
       ),
+      // 🔧 ADICIONADO AED
       items: const [
         DropdownMenuItem(value: 'BRL', child: Text('🇧🇷 Real (BRL)')),
         DropdownMenuItem(value: 'USD', child: Text('🇺🇸 Dólar (USD)')),
         DropdownMenuItem(value: 'EUR', child: Text('🇪🇺 Euro (EUR)')),
         DropdownMenuItem(value: 'GBP', child: Text('🇬🇧 Libra (GBP)')),
-        DropdownMenuItem(value: 'NZD', child: Text('🇳🇿 Dólar Neozelandês (NZD)')),  // ✅ ADICIONADO
+        DropdownMenuItem(value: 'NZD', child: Text('🇳🇿 Dólar Neozelandês (NZD)')),
+        DropdownMenuItem(value: 'AED', child: Text('🇦🇪 Dirham (AED)')),  // ✅ ADICIONADO
       ],
       onChanged: (value) {
         if (value != null) setState(() => _selectedCurrency = value);

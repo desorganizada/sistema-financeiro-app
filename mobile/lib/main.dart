@@ -1,10 +1,15 @@
+// lib/main.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'core/network/dio_client.dart';
 
 void main() {
+  // Inicializa o DioClient ANTES de rodar o app
+  DioClient.init();
   runApp(const MyApp());
 }
 

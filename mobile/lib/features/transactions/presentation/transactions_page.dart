@@ -6,6 +6,8 @@ import '../../../core/theme/app_styles.dart';
 import '../../../shared/widgets/app_empty_state.dart';
 import '../../../shared/widgets/app_error_state.dart';
 import '../../../shared/widgets/app_loading.dart';
+import '../../auth/data/auth_service.dart';
+import '../../auth/data/user_model.dart';
 import '../data/transaction_list_response.dart';
 import '../data/transaction_service.dart';
 
@@ -18,8 +20,11 @@ class TransactionsPage extends StatefulWidget {
 
 class _TransactionsPageState extends State<TransactionsPage> {
   final TransactionService _transactionService = TransactionService();
+  final AuthService _authService = AuthService();
 
   late Future<TransactionListResponse> _transactionsFuture;
+  UserModel? _currentUser;
+  bool _isLoadingUser = true;
 
   String _selectedType = 'all';
   int _selectedYear = DateTime.now().year;
@@ -28,7 +33,26 @@ class _TransactionsPageState extends State<TransactionsPage> {
   @override
   void initState() {
     super.initState();
-    _loadTransactions();
+    _loadUserAndTransactions();
+  }
+
+  Future<void> _loadUserAndTransactions() async {
+    try {
+      final user = await _authService.getMe();
+      if (mounted) {
+        setState(() {
+          _currentUser = user;
+          _isLoadingUser = false;
+        });
+        _loadTransactions();
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoadingUser = false;
+        });
+      }
+    }
   }
 
   void _loadTransactions() {
@@ -120,6 +144,13 @@ class _TransactionsPageState extends State<TransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoadingUser) {
+      return const Scaffold(
+        backgroundColor: AppColors.backgroundSand,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundSand,
       appBar: AppBar(
@@ -280,8 +311,10 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     itemBuilder: (context, index) {
                       final transaction = transactions[index];
                       
-                      // Mostra o valor convertido (amount_converted) em vez do original
+                      // 🔧 Usa o valor convertido (amount_converted) do backend
                       final convertedAmount = transaction.amountConverted ?? transaction.amountOriginal;
+                      // 🔧 Usa a moeda base do usuário para formatar
+                      final displayCurrency = _currentUser?.baseCurrency ?? 'BRL';
                       
                       return Card(
                         margin: const EdgeInsets.only(bottom: 12),
@@ -360,7 +393,8 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      _formatCurrency(convertedAmount, 'BRL'),
+                                      // 🔧 Agora usa a moeda base do usuário
+                                      _formatCurrency(convertedAmount, displayCurrency),
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

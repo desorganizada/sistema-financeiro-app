@@ -1,9 +1,9 @@
+// lib/features/auth/presentation/initial_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/storage/token_storage.dart';
-import '../data/auth_service.dart';
-import '../data/user_model.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -16,30 +16,22 @@ class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     super.initState();
-    _checkLogin();
+    _checkAuth();
   }
 
-  Future<void> _checkLogin() async {
-    final token = await TokenStorage.getToken();
-
-    if (!mounted) return;
-
-    if (token == null || token.isEmpty) {
-      context.go('/login');
-      return;
-    }
-
-    try {
-      final authService = AuthService();
-      final UserModel user = await authService.getMe();
-
-      if (!mounted) return;
-      context.go('/home', extra: user);
-    } catch (_) {
-      await TokenStorage.clearToken();
-
-      if (!mounted) return;
-      context.go('/login');
+  Future<void> _checkAuth() async {
+    // Aguarda um pouco para garantir que o storage está pronto
+    await Future.delayed(const Duration(milliseconds: 100));
+    
+    final token = await TokenStorage.getToken(); // Usa método antigo
+    if (token != null && token.isNotEmpty) {
+      if (mounted) {
+        context.go('/home');
+      }
+    } else {
+      if (mounted) {
+        context.go('/login');
+      }
     }
   }
 

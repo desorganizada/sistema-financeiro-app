@@ -1,0 +1,13 @@
+targets:
+  $default:
+    sources:
+      - web/**
+      - lib/**
+      - pubspec.yaml
+    builders:
+      copy_redirects:
+        import: "package:build/build.yaml"
+        builder_factories: ["copyRedirects"]
+        build_extensions: {".dart": ["../web/_redirects"]}
+        auto_apply: root_package
+        build_to: source

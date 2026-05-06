@@ -1,13 +1,16 @@
+# app/api/deps.py
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError
+from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
 from app.core.security import decode_access_token
 from app.models.user import User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+# 🔧 IMPORTANTE: auto_error=False para não lançar erro automaticamente
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login", auto_error=False)
 
 
 def get_current_user(
@@ -20,14 +23,21 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
 
+    # 🔧 Se não tem token, retorna 401
+    if not token:
+        raise credentials_exception
+
     try:
+        # 🔧 Usa a função correta para decodificar
+        from app.core.security import decode_access_token
         payload = decode_access_token(token)
         user_id = payload.get("sub")
 
         if user_id is None:
             raise credentials_exception
 
-    except JWTError:
+    except JWTError as e:
+        print(f"JWT Error: {e}")
         raise credentials_exception
 
     user = db.query(User).filter(User.id == int(user_id)).first()

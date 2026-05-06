@@ -1,50 +1,34 @@
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+# app/schemas/user.py
+
+from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
-class UserCreate(BaseModel):
+class UserBase(BaseModel):
     name: str
     email: EmailStr
-    password: str = Field(..., min_length=6, max_length=60)
-
-
-class UserResponse(BaseModel):
-    id: int
-    name: str
-    email: EmailStr
-    base_currency: str
-    is_admin: bool
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class UpdateBaseCurrency(BaseModel):
-    base_currency: str
-
-
-class AdminUserCreate(BaseModel):
-    name: str
-    email: EmailStr
-    password: str = Field(..., min_length=6, max_length=60)
     base_currency: str = "BRL"
     is_admin: bool = False
 
 
-class AdminUserUpdate(BaseModel):
-    name: str
-    email: EmailStr
-    base_currency: str
-    is_admin: bool
+class UserCreate(UserBase):
+    password: str
 
 
-class AdminUserPasswordUpdate(BaseModel):
-    new_password: str = Field(..., min_length=6, max_length=60)
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    base_currency: Optional[str] = None
+    is_admin: Optional[bool] = None
 
 
-class AdminUserListItem(BaseModel):
+class UserResponse(UserBase):
     id: int
-    name: str
-    email: EmailStr
-    base_currency: str
-    is_admin: bool
 
-    model_config = ConfigDict(from_attributes=True)
+    class Config:
+        from_attributes = True
+
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str  # 👈 estava "strc" (typo), agora corrigido para "str"
